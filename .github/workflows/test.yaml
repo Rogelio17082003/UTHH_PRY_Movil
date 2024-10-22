@@ -1,0 +1,57 @@
+name: Run Tests for Componentes-UI Branch
+
+on:
+  # Ejecutar el workflow solo cuando haya cambios en la rama componentes-UI
+  push:
+    branches:
+      - feature/componentes-UI
+  pull_request:
+    branches:
+      - feature/componentes-UI
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Configuración del repositorio
+      - name: Checkout Repository
+        uses: actions/checkout@v4.2.1
+      
+      # Instalación de Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      # Instalación de dependencias
+      - name: Install Dependencies
+        run: npm install
+
+      # Ejecución de pruebas
+      - name: Run Tests
+        run: npm test
+
+      # Guardar artefactos de pruebas (si fuera necesario)
+      - name: Save Test Results
+        if: failure()  # Solo guarda resultados si fallan
+        uses: actions/upload-artifact@v3  
+        with:
+          name: test-results
+          path: ./test-results # Puedes ajustar la ruta según tu estructura de carpetas
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    if: success()
+
+    steps:
+      # Clonar el repositorio00
+      - name: Checkout Repository
+        uses: actions/checkout@v4.2.1
+      
+      # Despliegue en Vercel o cualquier otro servicio de despliegue
+      - name: Deploy
+        run: |
+          npm run build
+          vercel --prod # Ajusta esto si usas otro sistema de despliegue
