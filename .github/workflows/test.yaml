@@ -1,13 +1,13 @@
 name: Run Tests 
 
 on:
-  # Ejecutar el workflow solo cuando haya cambios en la rama componentes-UI
+  # Ejecutar el workflow solo cuando haya cambios en la rama master
   push:
     branches:
-      - feature/componentes-UI
+      - master
   pull_request:
     branches:
-      - feature/componentes-UI
+      - master
 
 jobs:
   test:
@@ -46,7 +46,7 @@ jobs:
     if: success()
 
     steps:
-      # Clonar el repositorio00
+      # Clonar el repositorio
       - name: Checkout Repository
         uses: actions/checkout@v4.2.1
       
