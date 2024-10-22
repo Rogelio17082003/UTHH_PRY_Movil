@@ -1,4 +1,4 @@
-name: Run Tests for Componentes-UI Branch
+name: Run Tests 
 
 on:
   # Ejecutar el workflow solo cuando haya cambios en la rama componentes-UI
