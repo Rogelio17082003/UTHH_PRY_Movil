@@ -135,7 +135,7 @@ export const CustomInputPassword: React.FC<CustomInputPasswordProps> = ({
 
 
 
-//boton cargando
+//boton cargando para login
 
 interface LoadingButtonProps {
     isLoading: boolean;
