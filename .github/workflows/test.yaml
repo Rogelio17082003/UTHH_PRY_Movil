@@ -8,7 +8,7 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch:  # Permite ejecutar el flujo manualmente
+  workflow_dispatch:  # Permite ejecutar el flujo manualmentee
 
 jobs:
   build:
