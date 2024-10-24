@@ -1,37 +1,50 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { Slot, Stack,useRouter } from "expo-router";
+import { View, Text } from "react-native";
+import React, {useState,useEffect} from 'react'
+import Nav from "./nav";
+import { AuthProvider } from './auth/AuthContext';
+import { getToken } from './auth/sessionService';  // Asegúrate de importar correctamente getToken
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+export default function _layout() {
+  const router = useRouter();
+  
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+    const checkToken = async () => {
+      try {
+        const token = await getToken();  // Espera a que el token sea obtenido correctamente
+        console.log("Token recuperado: " + token);
 
-  if (!loaded) {
-    return null;
-  }
+
+        if (token) {
+          router.replace('/(tabs)');  // Si hay token, redirige a las tabs
+          console.log("este es el bueno " + token);
+        } 
+      } catch (error) {
+        console.error('Error al obtener el token', error);
+      }
+    };
+
+    checkToken();  // Llama a la función asíncrona dentro del useEffect
+  }, []); 
+
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
-  );
+    <AuthProvider>
+      <View style={{ flex: 1 }}>
+        <Stack
+          screenOptions={{
+            headerTitle: "",
+            headerLeft: () => <Nav />,
+
+          }}
+
+        >
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
+      </View>
+    </AuthProvider>
+
+  )
 }

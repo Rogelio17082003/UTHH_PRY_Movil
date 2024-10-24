@@ -1,57 +1,61 @@
-name: Run Tests 
+name: React Native CI/CD Workflow
 
+# Desencadenadores (triggers)
 on:
-  # Ejecutar el workflow solo cuando haya cambios en la rama master
   push:
     branches:
-      - master
+      - main  # Puedes cambiar a otra rama si es necesario
   pull_request:
     branches:
-      - master
+      - main
+  workflow_dispatch:  # Permite ejecutar el flujo manualmente
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
-    steps:
-      # Configuración del repositorio
-      - name: Checkout Repository
-        uses: actions/checkout@v4.2.1
-      
-      # Instalación de Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
-      # Instalación de dependencias
-      - name: Install Dependencies
-        run: npm install
-
-      # Ejecución de pruebas
-      - name: Run Tests
-        run: npm test
-
-      # Guardar artefactos de pruebas (si fuera necesario)
-      - name: Save Test Results
-        if: failure()  # Solo guarda resultados si fallan
-        uses: actions/upload-artifact@v3  
-        with:
-          name: test-results
-          path: ./test-results # Puedes ajustar la ruta según tu estructura de carpetas
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: test
-    if: success()
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x]  # Puedes ajustar las versiones de Node.js si lo prefieres
+        os: [ubuntu-latest]  # Puedes cambiar a macos si necesitas construir para iOS
 
     steps:
-      # Clonar el repositorio
-      - name: Checkout Repository
-        uses: actions/checkout@v4.2.1
-      
-      # Despliegue en Vercel o cualquier otro servicio de despliegue
-      - name: Deploy
-        run: |
-          npm run build
-          vercel --prod # Ajusta esto si usas otro sistema de despliegue
+    # 1. Checkout del código del repositorio
+    - uses: actions/checkout@v2
+
+    # 2. Configurar Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    # 3. Instalar dependencias del proyecto
+    - name: Install dependencies
+      run: npm install
+
+    # 4. Instalar dependencias de CocoaPods (si estás en macOS para iOS)
+    - name: Install CocoaPods
+      if: runner.os == 'macOS'
+      run: |
+        cd ios
+        pod install
+        cd ..
+
+    # 5. Ejecutar pruebas con Jest
+    - name: Run tests
+      run: npm test
+
+    # 6. Build de la aplicación Android (y iOS si usas macOS)
+    - name: Build Android
+      run: |
+        cd android
+        ./gradlew assembleDebug
+
+    # O, si quieres compilar para iOS en macOS, puedes agregar:
+    # - name: Build iOS
+    #   if: runner.os == 'macOS'
+    #   run: |
+    #     cd ios
+    #     xcodebuild -workspace <tu_proyecto>.xcworkspace -scheme <tu_proyecto> -sdk iphonesimulator -derivedDataPath build
+
+    # Puedes agregar pasos adicionales como despliegue, si es necesario.
