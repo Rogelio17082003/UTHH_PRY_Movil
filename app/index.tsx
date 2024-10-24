@@ -1,5 +1,5 @@
 import React from 'react'
-import Home from './home'
+import Home from './home'; 
 
 import { View, Text } from "react-native";
 export default function index() {

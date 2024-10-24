@@ -126,7 +126,7 @@ export default function Login() {
         {/* Imagen de fondo en la parte superior */}
         <View style={tw`h-1/3`}>
           <ImageBackground
-            source={require('../assets/images/portada.jpg')}
+            source={require('../assets/images/portada.png')}
             style={tw`w-full h-full`}
             resizeMode="cover"
           />
