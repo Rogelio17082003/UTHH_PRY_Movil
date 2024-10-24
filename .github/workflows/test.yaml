@@ -4,7 +4,7 @@ name: React Native CI/CD Workflow
 on:
   push:
     branches:
-      - main  # Puedes cambiar a otra rama si es necesario
+      - master  # Puedes cambiar a otra rama si es necesario
   pull_request:
     branches:
       - main
