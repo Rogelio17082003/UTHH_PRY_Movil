@@ -3,7 +3,7 @@ name: Mobil CI/CD Workflow).
 on:
   push:
     branches:
-      - master  # Puedes ajustar según las ramas que quieras incluir
+      - master  # Puedes ajustar según las ramas que quieras incluirr
       - feature/componentes-UI
       - feature/navegacion-pantallas
       - feature/animaciones-funcionalidades
