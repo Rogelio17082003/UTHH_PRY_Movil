@@ -91,25 +91,25 @@ jobs:
 
           # notificaciones Slack
   notify:
-    runs-on: ubuntu-latest
-#    needs: build
-    if: always()  # Ejecutar siempre, sin importar el resultado del job
-    steps:
-      # Enviar notificación cuando falle el job
-      - name: Send Slack notification on failure
-        if: failure()  # Enviar notificación solo si el build falla
-        run: |
-          curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"🚨 Job **${{ github.job }}** (Build) failed for commit: ${{ github.sha }}"}' \
-          ${{ secrets.SLACK_WEBHOOK_URL }}
+      runs-on: ubuntu-latest
+      needs: build
+      if: always()  # Asegura que siempre se ejecute sin importar el estado del job anterior
+      steps:
+        # Notificación de fallo del build
+        - name: Send Slack notification on failure
+          if: failure() && github.job != 'notify'  # Notificar solo si el job 'build' falla
+          run: |
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"🚨 Job **${{ needs.build.result }}** failed for commit: ${{ github.sha }}"}' \
+            ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      # Enviar notificación cuando tenga éxito el job
-      - name: Send Slack notification on success
-        if: success()  # Enviar notificación solo si el build tiene éxito
-        run: |
-          curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"✅ Job **${{ github.job }}**  succeeded for commit: ${{ github.sha }}"}' \
-          ${{ secrets.SLACK_WEBHOOK_URL }}
+        # Notificación de éxito del build
+        - name: Send Slack notification on success
+          if: success() && github.job != 'notify'  # Notificar solo si el job 'build' tiene éxito
+          run: |
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"✅ Job **${{ needs.build.result }}** succeeded for commit: ${{ github.sha }}"}' \
+            ${{ secrets.SLACK_WEBHOOK_URL }}
 
 
-     
+      
