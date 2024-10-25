@@ -92,7 +92,7 @@ jobs:
           # notificaciones Slack
   notify:
     runs-on: ubuntu-latest
-    needs: build
+#    needs: build
     if: always()  # Ejecutar siempre, sin importar el resultado del job
     steps:
       # Enviar notificación cuando falle el job
