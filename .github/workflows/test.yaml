@@ -82,22 +82,45 @@ jobs:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
 
 
-  # Notificaciones para el job de build
+  # notificaciones Slack
   notify_build:
     runs-on: ubuntu-latest
     needs: build
-    if: github.ref == 'refs/heads/master'  # Solo notificar si es la rama master
     steps:
-      # Enviar notificación cuando falle el build
+## esto es para que mande mensaje cuando falla el    
       - name: Send Slack notification on failure
-        if: failure()  # Notificar solo si el build falla
+        if: failure()  # Only send notification if the build fails
         run: |
           curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"🚨 Build failed Job: build en la rama: ${{ github.ref_name }}"}' \
+          --data '{"text":"🚨 Build failed Job: build en la ram:${{ github.ref_name }} "}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      # Enviar notificación cuando tenga éxito el build
       - name: Send Slack notification on success
-        if: success()  # Notificar solo si el build tiene éxito
+        if: success()  # Only send notification if the build succeeds
         run: |
-          curl -X POST -H 'Content-type: application/json' 
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{"text":"✅ Build succeeded Job: build en la ram:${{ github.ref_name }}  "}' \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  notify_test:
+      runs-on: ubuntu-latest
+      needs: build-and-test
+      steps:
+  ## esto es para que mande mensaje cuando falla el    
+        - name: Send Slack notification on failure
+          if: failure()  # Only send notification if the build fails
+          run: |
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"🚨 Build failed Job: build-and-test en la ram:${{ github.ref_name }}  "}' \
+            ${{ secrets.SLACK_WEBHOOK_URL }}
+
+        - name: Send Slack notification on success
+          if: success()  # Only send notification if the build succeeds
+          run: |
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"✅ Build succeeded Job: build-and-test en la ram:${{ github.ref_name }}  "}' \
+            ${{ secrets.SLACK_WEBHOOK_URL }}
+        - name: Send Slack notification on success
+          if: success()  # Notificar solo si el build tiene éxito
+          run: |
+            curl -X POST -H 'Content-type: application/json' 
