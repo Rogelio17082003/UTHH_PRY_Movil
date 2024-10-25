@@ -18,6 +18,7 @@ const MateriasDocente = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   interface Materia {
+    
     NombreCuatrimestre: string;
     NombrePeriodo: string;
     intClvCuatrimestre: number;
