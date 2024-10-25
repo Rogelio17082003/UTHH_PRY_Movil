@@ -13,6 +13,7 @@ on:
       - feature/pantallas-principales
       - feature/pruebas-y-optimizacion
   pull_request:
+    types: [opened, closed]  # Solo ejecutar cuando se abre o cierra el pull request
     branches:
       - master
      
