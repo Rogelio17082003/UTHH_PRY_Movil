@@ -116,7 +116,7 @@ export default function Perfil() {
                     color="#ff0000" // Color rojo para indicar cerrar sesión
                     onPress={handleLogout}
                 >
-                    Cerrar sesión
+                    Cerrar sesión para los alumnos
                 </Button>
             </View>
 
