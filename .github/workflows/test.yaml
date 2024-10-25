@@ -87,8 +87,4 @@ jobs:
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
 
-      # Construcción para iOS (solo si es necesario)
-      - name: Build IPA for iOS
-        run: expo build:ios
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
+
