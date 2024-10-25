@@ -14,7 +14,7 @@ export default function Perfil() {
     const { userData, logout } = useAuth();  // Usa el hook de autenticación
     const navigation = useNavigation();
 
-
+ //
 
     const profileImageUrl = userData && userData.vchFotoPerfil
         ? `https://robe.host8b.me/assets/imagenes/${userData.vchFotoPerfil}`
