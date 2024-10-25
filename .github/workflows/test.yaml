@@ -90,9 +90,9 @@ jobs:
 
 
           # notificaciones Slack
-  notify:
+  notify_build:
     runs-on: ubuntu-latest
-    needs: [build-and-test, build]
+    needs: build
     steps:
 ## esto es para que mande mensaje cuando falla el    
       - name: Send Slack notification on failure
@@ -108,5 +108,24 @@ jobs:
           curl -X POST -H 'Content-type: application/json' \
           --data '{"text":"✅ Build succeededJob ${{ github.job }} en la ram:${{ github.ref_name }}  "}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
+          
+  notify_test:
+      runs-on: ubuntu-latest
+      needs: build-and-test
+      steps:
+  ## esto es para que mande mensaje cuando falla el    
+        - name: Send Slack notification on failure
+          if: failure()  # Only send notification if the build fails
+          run: |
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"🚨 Build failed for commit: ${{ github.sha }}"}' \
+            ${{ secrets.SLACK_WEBHOOK_URL }}
+
+        - name: Send Slack notification on success
+          if: success()  # Only send notification if the build succeeds
+          run: |
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"✅ Build succeededJob ${{ github.job }} en la ram:${{ github.ref_name }}  "}' \
+            ${{ secrets.SLACK_WEBHOOK_URL }}
 
      
