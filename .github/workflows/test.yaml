@@ -92,7 +92,7 @@ jobs:
           # notificaciones Slack
   notify:
     runs-on: ubuntu-latest
-    needs: build-and-test
+    needs: build
     steps:
       - name: Send Slack notification on failure
         if: failure()  # Only send notification if the build fails
