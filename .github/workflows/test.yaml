@@ -83,7 +83,7 @@ jobs:
 
       # Construcción para Android
       - name: Build APK for Android
-        run: eas build --profile development --platform android
+        run: npx eas-cli build --platform android --profile preview
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
 
