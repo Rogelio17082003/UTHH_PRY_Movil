@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['16.x']  # Elige la versión de Node.js que estés usando en tu proyecto.
+        node-version: ['16.x']  # Elige la versión de Node.js que estés usando en tu proyecto.....
 
     steps:
       - name: Checkout code
