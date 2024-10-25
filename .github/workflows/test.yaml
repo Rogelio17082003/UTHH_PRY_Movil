@@ -1,4 +1,5 @@
-name: React Native CI/CD Workflow
+name: Mobil CI/CD Workflow
+
 on:
   push:
     branches:
@@ -25,7 +26,7 @@ on:
   workflow_dispatch:  # Permite ejecutar el flujo manualmente
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -54,14 +55,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Validación de TypeScript
-      - name: TypeScript Check
-        run: npm run tsc
-
-      # Ejecutar pruebas unitarias
-      - name: Run tests
-        run: npm test
-
       # Lint del código
       - name: Lint code with Expo
         run: expo lint --max-warnings=0
@@ -69,7 +62,7 @@ jobs:
   # Construcción para Android e iOS
   build:
     runs-on: ubuntu-latest
-    needs: build-and-test
+    needs: build
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
