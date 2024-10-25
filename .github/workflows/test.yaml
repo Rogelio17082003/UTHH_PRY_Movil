@@ -70,7 +70,7 @@ jobs:
   # Construcción para Android e iOS
   build:
     runs-on: ubuntu-latest
-#    needs: build-and-test
+    needs: build-and-test
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -108,7 +108,7 @@ jobs:
         if: success()  # Enviar notificación solo si el build tiene éxito
         run: |
           curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"✅ Job **${{ github.job }}** (Build) succeeded for commit: ${{ github.sha }}"}' \
+          --data '{"text":"✅ Job **${{ github.job }}**  succeeded for commit: ${{ github.sha }}"}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
 
 
