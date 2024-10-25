@@ -75,15 +75,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Expo CLI
-        run: npm install --global expo-cli
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
 
       - name: Install dependencies
         run: npm install
 
       # Construcción para Android
       - name: Build APK for Android
-        run: expo build:android
+        run: eas build -p android
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
 
