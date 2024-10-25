@@ -120,7 +120,4 @@ jobs:
             curl -X POST -H 'Content-type: application/json' \
             --data '{"text":"✅ Build succeeded Job: build-and-test en la ram:${{ github.ref_name }}  "}' \
             ${{ secrets.SLACK_WEBHOOK_URL }}
-        - name: Send Slack notification on success
-          if: success()  # Notificar solo si el build tiene éxito
-          run: |
-            curl -X POST -H 'Content-type: application/json' 
+      
