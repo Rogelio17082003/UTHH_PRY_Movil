@@ -73,11 +73,10 @@ jobs:
       run: |
         cd ios
         xcodebuild -workspace YourApp.xcworkspace -scheme YourApp -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.0' clean build
-
-    # 7. Upload Android build artifacts (si quieres subir el APK a algún lugar)
+   # 7. Upload Android build artifacts (si quieres subir el APK a algún lugar)
     - name: Upload APK
       if: runner.os == 'ubuntu-latest'
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3  # Actualizado a la versión más reciente
       with:
         name: android-apk
         path: android/app/build/outputs/apk/debug/app-debug.apk
