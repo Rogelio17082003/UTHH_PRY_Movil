@@ -67,11 +67,4 @@ jobs:
         cd android
         ./gradlew assembleDebug
 
-    # O, si quieres compilar para iOS en macOS, puedes agregar:
-    # - name: Build iOS
-    #   if: runner.os == 'macOS'
-    #   run: |
-    #     cd ios
-    #     xcodebuild -workspace <tu_proyecto>.xcworkspace -scheme <tu_proyecto> -sdk iphonesimulator -derivedDataPath build
-
-    # Puedes agregar pasos adicionales como despliegue, si es necesario.
+  
