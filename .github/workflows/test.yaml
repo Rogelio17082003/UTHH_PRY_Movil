@@ -99,14 +99,14 @@ jobs:
         if: failure()  # Only send notification if the build fails
         run: |
           curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"🚨 Build failed Job: "build" en la ram:${{ github.ref_name }} "}' \
+          --data '{"text":"🚨 Build failed Job: build en la ram:${{ github.ref_name }} "}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Send Slack notification on success
         if: success()  # Only send notification if the build succeeds
         run: |
           curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"✅ Build succeeded Job: "build" en la ram:${{ github.ref_name }}  "}' \
+          --data '{"text":"✅ Build succeeded Job: build en la ram:${{ github.ref_name }}  "}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
 
   notify_test:
@@ -118,14 +118,14 @@ jobs:
           if: failure()  # Only send notification if the build fails
           run: |
             curl -X POST -H 'Content-type: application/json' \
-            --data '{"text":"🚨 Build failed Job: "build-and-test" en la ram:${{ github.ref_name }}  "}' \
+            --data '{"text":"🚨 Build failed Job: build-and-test en la ram:${{ github.ref_name }}  "}' \
             ${{ secrets.SLACK_WEBHOOK_URL }}
 
         - name: Send Slack notification on success
           if: success()  # Only send notification if the build succeeds
           run: |
             curl -X POST -H 'Content-type: application/json' \
-            --data '{"text":"✅ Build succeeded Job: "build-and-test" en la ram:${{ github.ref_name }}  "}' \
+            --data '{"text":"✅ Build succeeded Job: build-and-test en la ram:${{ github.ref_name }}  "}' \
             ${{ secrets.SLACK_WEBHOOK_URL }}
 
      
