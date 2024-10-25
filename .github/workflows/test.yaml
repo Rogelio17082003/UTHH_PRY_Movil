@@ -15,14 +15,7 @@ on:
   pull_request:
     branches:
       - master
-      - feature/componentes-UI
-      - feature/navegacion-pantallas
-      - feature/animaciones-funcionalidades
-      - feature/apis-logica-negocio
-      - feature/limpieza-y-optimizacion-codigo
-      - feature/mejoras-rendimiento
-      - feature/pantallas-principales
-      - feature/pruebas-y-optimizacion
+     
   workflow_dispatch:  # Permite ejecutar el flujo manualmente
 
 jobs:
