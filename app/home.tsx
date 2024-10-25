@@ -10,7 +10,7 @@ export default function Home() {
     return (
         <View>
             
-            <ScrollView>
+             <ScrollView>
 
                 {/* Cuerpo */}
                 <View style={tw`bg-white py-8 px-6 mt-1`}>

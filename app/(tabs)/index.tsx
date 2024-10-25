@@ -63,7 +63,7 @@ const MateriasDocente = () => {
     else if (month >= 5 && month <= 8) partial = `${month - 4}`;
     else if (month >= 9 && month <= 12) partial = `${month - 8}`;
     return { period, partial };
-  };
+  }};
 
   const extractActivityData = (parsedData: any) => {
     const activityData = [];

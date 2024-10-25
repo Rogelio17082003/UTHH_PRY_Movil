@@ -21,7 +21,7 @@ export default function Perfil() {
         : 'https://robe.host8b.me/assets/imagenes/userProfile.png'; // Imagen de perfil por defecto si no hay `vchFotoPerfil`
     // Imagen de perfil
 
-    // Función para manejar el cierre de sesión
+    // Función para manejar el cierre de sesiónn
     const handleLogout = async () => {
         Alert.alert(
             "Cerrar sesión",

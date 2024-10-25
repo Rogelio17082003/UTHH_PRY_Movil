@@ -7,6 +7,7 @@ export default function index() {
         <View>
       
             <Home />
+            
         </View>
 
     )
