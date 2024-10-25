@@ -13,7 +13,7 @@ interface CustomInputProps {
     trigger: (name: string) => void;
     [key: string]: any; // Esto permite que el componente acepte otras props arbitrarias
 }
-
+//este es para los componentes
 export const CustomInput: React.FC<CustomInputProps> = ({
     label,
     name,
