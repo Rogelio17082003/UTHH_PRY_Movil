@@ -83,7 +83,11 @@ jobs:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
 
 
-  # notificaciones Slack
+
+  ### notificaciones Slack
+
+
+  #NOTIFICACIONES
   notify_build:
     runs-on: ubuntu-latest
     needs: build
@@ -121,4 +125,26 @@ jobs:
             curl -X POST -H 'Content-type: application/json' \
             --data '{"text":"✅ Build succeeded Job: build-and-test en la ram:${{ github.ref_name }}  "}' \
             ${{ secrets.SLACK_WEBHOOK_URL }}
+
+
+#notificacion del pul request
+  notify_pr_comment:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Add comment on PR
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { context } = require('@actions/github');
+            github.issues.createComment({
+              issue_number: context.payload.pull_request.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "🚀 ¡El Pull Request ha sido actualizado! Revisa los últimos cambios."
+            })
       
