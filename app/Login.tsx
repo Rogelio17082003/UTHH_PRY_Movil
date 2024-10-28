@@ -139,7 +139,7 @@ export default function Login() {
             style={tw`w-24 h-16 self-center mb-5`}
           />
 
-          {/* Título */}
+          {/* Título 1 */}
           <Text style={tw`text-xl font-bold text-center mb-2`}>Bienvenido de vuelta</Text>
           <Text style={tw`text-sm text-gray-500 text-center mb-5`}>
             Empieza donde lo dejaste, inicia sesión para continuar.

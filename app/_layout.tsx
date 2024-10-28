@@ -8,7 +8,7 @@ import { getToken } from './auth/sessionService';  // Asegúrate de importar cor
 export default function _layout() {
   const router = useRouter();
   
-
+//
 
   useEffect(() => {
     const checkToken = async () => {
