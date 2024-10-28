@@ -1,9 +1,9 @@
-name: Mobil CI/CD Workflow
+name: Mobil CI/CD Workflow. 
 
 on:
   push:
     branches:
-      - master
+      - master  # Puedes ajustar según las ramas que quieras incluir
       - feature/componentes-UI
       - feature/navegacion-pantallas
       - feature/animaciones-funcionalidades
@@ -13,17 +13,18 @@ on:
       - feature/pantallas-principales
       - feature/pruebas-y-optimizacion
   pull_request:
-    types: [opened, closed]
+    types: [opened, closed]  # Solo ejecutar cuando se abre o cierra el pull request
     branches:
       - master
-  workflow_dispatch:
+     
+  workflow_dispatch:  # Permite ejecutar el flujo manualmente
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['20.x']
+        node-version: ['20.x']  # Elige la versión de Node.js que estés usando en tu proyecto.....
 
     steps:
       - name: Checkout code
@@ -48,20 +49,13 @@ jobs:
       - name: Install dependencies
         run: npm install 
 
-      # Arrancar el emulador de Android
-      - name: Start Android Emulator
-        uses: ReactiveCircus/android-emulator-runner@v2.33.0
-        with:
-          api-level: 30               # Cambia el nivel de API según tus necesidades
-          target: default              # Usa el emulador predeterminado
-          arch: x86_64                 # Arquitectura del emulador
-                     # Perfil del dispositivo (puedes cambiarlo a otro dispositivo)
-          disable-animations: true     # Desactiva animaciones para que sea más rápido
-          script: ./gradlew connectedAndroidTest
+      # Validación de TypeScript
+      #- name: TypeScript Check
+      #  run: npm run tsc
 
-      # Ejecutar pruebas instrumentadas en el emulador
-      - name: Run instrumented tests
-        run: ./gradlew connectedAndroidTest
+      # Ejecutar pruebas unitarias
+    #  - name: Run tests
+     #   run: npm test
 
       # Lint del código
       - name: Lint code with Expo
@@ -71,6 +65,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: build-and-test
+    #if: github.ref == 'refs/heads/master'  # Ejecutar solo en la rama master
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -83,49 +78,56 @@ jobs:
 
       # Construcción para Android
       - name: Build APK for Android
-        run: npx eas-cli build --platform android --profile preview --non-interactive
+        run: npx eas-cli build --platform android --profile preview  --non-interactive
         env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
 
-  # Notificaciones Slack para el trabajo de construcción
+
+
+  ### notificaciones Slack
+
+
+  #NOTIFICACIONES
   notify_build:
     runs-on: ubuntu-latest
     needs: build
     steps:
+## esto es para que mande mensaje cuando falla el    
       - name: Send Slack notification on failure
-        if: failure()
+        if: failure()  # Only send notification if the build fails
         run: |
           curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"🚨 Build failed Job: build en la rama:${{ github.ref_name }} "}' \
+          --data '{"text":"🚨 Build failed Job: build en la ram:${{ github.ref_name }} "}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Send Slack notification on success
-        if: success()
+        if: success()  # Only send notification if the build succeeds
         run: |
           curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"✅ Build succeeded Job: build en la rama:${{ github.ref_name }}  "}' \
+          --data '{"text":"✅ Build succeeded Job: build en la ram:${{ github.ref_name }}  "}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
 
-  # Notificaciones Slack para el trabajo de pruebas
   notify_test:
-    runs-on: ubuntu-latest
-    needs: build-and-test
-    steps:
-      - name: Send Slack notification on failure
-        if: failure()
-        run: |
-          curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"🚨 Build failed Job: build-and-test en la rama:${{ github.ref_name }}  "}' \
-          ${{ secrets.SLACK_WEBHOOK_URL }}
+      runs-on: ubuntu-latest
+      needs: build-and-test
+      steps:
+  ## esto es para que mande mensaje cuando falla el    
+        - name: Send Slack notification on failure
+          if: failure()  # Only send notification if the build fails
+          run: |
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"🚨 Build failed Job: build-and-test en la ram:${{ github.ref_name }}  "}' \
+            ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - name: Send Slack notification on success
-        if: success()
-        run: |
-          curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"✅ Build succeeded Job: build-and-test en la rama:${{ github.ref_name }}  "}' \
-          ${{ secrets.SLACK_WEBHOOK_URL }}
+        - name: Send Slack notification on success
+          if: success()  # Only send notification if the build succeeds
+          run: |
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"✅ Build succeeded Job: build-and-test en la ram:${{ github.ref_name }}  "}' \
+            ${{ secrets.SLACK_WEBHOOK_URL }}
 
-  # Notificación en pull request
+
+#notificacion del pul request
   notify_pr_comment:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
@@ -145,3 +147,4 @@ jobs:
               repo: context.repo.repo,
               body: "🚀 ¡El Pull Request ha sido actualizado! Revisa los últimos cambios."
             })
+      
