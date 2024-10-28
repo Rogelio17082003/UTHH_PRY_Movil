@@ -57,6 +57,7 @@ jobs:
           arch: x86_64                 # Arquitectura del emulador
           profile: Nexus6              # Perfil del dispositivo (puedes cambiarlo a otro dispositivo)
           disable-animations: true     # Desactiva animaciones para que sea más rápido
+          script: ./gradlew connectedAndroidTest
 
       # Ejecutar pruebas instrumentadas en el emulador
       - name: Run instrumented tests
