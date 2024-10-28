@@ -47,7 +47,7 @@ jobs:
         run: npm install --global expo-cli
 
       - name: Install dependencies
-        run: npm install
+        run: npm install -y
 
       # Validación de TypeScript
       #- name: TypeScript Check
@@ -74,11 +74,11 @@ jobs:
         run: npm install -g eas-cli
 
       - name: Install dependencies
-        run: npm install -y
+        run: npm install 
 
       # Construcción para Android
       - name: Build APK for Android
-        run: npx eas-cli build --platform android --profile preview 
+        run: npx eas-cli build --platform android --profile preview  --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
 
