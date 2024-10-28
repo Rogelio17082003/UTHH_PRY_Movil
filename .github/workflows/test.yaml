@@ -55,7 +55,7 @@ jobs:
           api-level: 30               # Cambia el nivel de API según tus necesidades
           target: default              # Usa el emulador predeterminado
           arch: x86_64                 # Arquitectura del emulador
-          profile: Nexus6              # Perfil del dispositivo (puedes cambiarlo a otro dispositivo)
+          profile: Pixel_3a              # Perfil del dispositivo (puedes cambiarlo a otro dispositivo)
           disable-animations: true     # Desactiva animaciones para que sea más rápido
           script: ./gradlew connectedAndroidTest
 
