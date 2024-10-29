@@ -53,9 +53,7 @@ jobs:
       #- name: TypeScript Check
       #  run: npm run tsc
 
-      # Ejecutar pruebas unitarias
-      - name: Run test
-        run: npm test
+     
 
 ##PRUEBAS UNITARIAS
   test:
