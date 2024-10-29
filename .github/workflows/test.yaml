@@ -54,8 +54,8 @@ jobs:
       #  run: npm run tsc
 
       # Ejecutar pruebas unitarias
-    #  - name: Run tests
-     #   run: npm test
+      - name: Run test
+        run: npm test
 
       # Lint del código
       - name: Lint code with Expo
