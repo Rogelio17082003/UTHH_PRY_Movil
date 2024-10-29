@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, Alert, FlatList } from 'react-native';
+import {
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+  Alert,
+  FlatList,
+} from 'react-native';
 import { Card, Button } from 'react-native-paper';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import * as XLSX from 'xlsx';
@@ -10,7 +17,7 @@ import { useAuth } from '../auth/useAuth'; // Hook de autenticación
 
 const MateriasDocente = () => {
   const { userData } = useAuth(); // Obtén el estado de autenticación del contexto
-  const [materias, setMaterias] = useState<Materia[]>([]);  // Aquí Materia es la interfaz de tus datos
+  const [materias, setMaterias] = useState<Materia[]>([]); // Aquí Materia es la interfaz de tus datos
   const [actividades, setActividades] = useState([]);
   const [file, setFile] = useState(null);
   const [info, setInfo] = useState({});
@@ -18,7 +25,6 @@ const MateriasDocente = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   interface Materia {
-    
     NombreCuatrimestre: string;
     NombrePeriodo: string;
     intClvCuatrimestre: number;
@@ -28,17 +34,16 @@ const MateriasDocente = () => {
     vchNomMateria: string;
   }
 
-
-
-
   const handleFileUpload = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
-        type: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'],
+        type: [
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          'application/vnd.ms-excel',
+        ],
       });
-
     } catch (error) {
-      console.error("Error al cargar archivo", error);
+      console.error('Error al cargar archivo', error);
     }
   };
 
@@ -95,19 +100,22 @@ const MateriasDocente = () => {
   const onloadMaterias = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('https://robe.host8b.me/WebServices/cargarMaterias.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          matriculaDocent: "20210643",
-        }),
-      });
+      const response = await fetch(
+        'https://robe.host8b.me/WebServices/cargarMaterias.php',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            matriculaDocent: '20210643',
+          }),
+        }
+      );
       const result = await response.json();
-      console.log(result)
+      console.log(result);
       if (result.done) {
-        console.log('Este es el resultado de las materias',result.message)
+        console.log('Este es el resultado de las materias', result.message);
         setMaterias(result.message);
       }
     } catch (error) {
@@ -123,8 +131,6 @@ const MateriasDocente = () => {
 
   return (
     <View style={tw`flex-1 bg-white p-4`}>
-      
-
       {/* Upload button */}
       <View style={tw`mb-4`}>
         <Button
@@ -144,26 +150,26 @@ const MateriasDocente = () => {
           keyExtractor={(item) => item.vchClvMateria} // Clave única
           renderItem={({ item }) => (
             <Card style={tw`mb-4`}>
-            <Card.Content>
-              <Text style={tw`text-lg font-bold`} >Hola {item.vchClvMateria}</Text>
-              <Text>{item.vchNomMateria}</Text>
-              <Text>Periodo: {item.NombrePeriodo}</Text>
-            </Card.Content>
-          </Card>
-          
+              <Card.Content>
+                <Text style={tw`text-lg font-bold`}>
+                  Hola {item.vchClvMateria}
+                </Text>
+                <Text>{item.vchNomMateria}</Text>
+                <Text>Periodo: {item.NombrePeriodo}</Text>
+              </Card.Content>
+            </Card>
           )}
-
-
         />
       ) : (
         <View style={tw`flex-1 justify-center items-center`}>
           <FontAwesome name="frown-o" size={50} color="gray" />
-          <Text style={tw`text-gray-500 mt-4`}>No hay clases agregadas. Añade una clase para empezar.</Text>
+          <Text style={tw`text-gray-500 mt-4`}>
+            No hay clases agregadas. Añade una clase para empezar.
+          </Text>
         </View>
       )}
-
     </View>
   );
 };
 
-export default MateriasDocente; 
+export default MateriasDocente;

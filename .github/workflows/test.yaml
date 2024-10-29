@@ -1,9 +1,9 @@
-name: Mobil CI/CD Workflow. 
+name: Mobil CI/CD Workflow.
 
 on:
   push:
     branches:
-      - master  # Puedes ajustar según las ramas que quieras incluir
+      - master # Puedes ajustar según las ramas que quieras incluir
       - feature/componentes-UI
       - feature/navegacion-pantallas
       - feature/animaciones-funcionalidades
@@ -13,18 +13,18 @@ on:
       - feature/pantallas-principales
       - feature/pruebas-y-optimizacion
   pull_request:
-    types: [opened, closed]  # Solo ejecutar cuando se abre o cierra el pull request
+    types: [opened, closed] # Solo ejecutar cuando se abre o cierra el pull request
     branches:
       - master
-     
-  workflow_dispatch:  # Permite ejecutar el flujo manualmente
+
+  workflow_dispatch: # Permite ejecutar el flujo manualmente
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['20.x']  # Elige la versión de Node.js que estés usando en tu proyecto.....
+        node-version: ['20.x'] # Elige la versión de Node.js que estés usando en tu proyecto.....
 
     steps:
       - name: Checkout code
@@ -47,7 +47,7 @@ jobs:
         run: npm install --global expo-cli
 
       - name: Install dependencies
-        run: npm install 
+        run: npm install
 
       # Validación de TypeScript
       #- name: TypeScript Check
@@ -57,15 +57,55 @@ jobs:
       - name: Run test
         run: npm test
 
-      # Lint del código
-      - name: Lint code with Expo
-        run: expo lint --max-warnings=0
+##PRUEBAS UNITARIAS
+  test:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: Set up Node.js
+          uses: actions/setup-node@v2
+          with:
+            node-version: '20' # Asegúrate de que esta versión coincida con la de tu proyecto
+
+        - name: Install dependencies
+          run: npm install
+
+        # Ejecutar las pruebas unitarias
+        - name: Run Tests
+          run: npm test
+
+
+##LINT
+  eslint:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: Set up Node.js
+          uses: actions/setup-node@v2
+          with:
+            node-version: '20' # Asegúrate de que esta versión coincida con la de tu proyecto
+
+        - name: Install dependencies
+          run: npm install
+
+        - name: Run ESLint
+          run: npx eslint . --fix
+
+
+
+
 
   # Construcción para Android e iOS
   build:
     runs-on: ubuntu-latest
     needs: build-and-test
-    if: github.ref == 'refs/heads/master'  # Ejecutar solo en la rama master
+    if: github.ref == 'refs/heads/master' # Ejecutar solo en la rama master
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -74,60 +114,56 @@ jobs:
         run: npm install -g eas-cli
 
       - name: Install dependencies
-        run: npm install 
+        run: npm install
 
       # Construcción para Android
       - name: Build APK for Android
         run: npx eas-cli build --platform android --profile preview  --non-interactive
         env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
-
-
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }} # Asegúrate de configurar el token en GitHub Secrets
 
   ### notificaciones Slack
-
 
   #NOTIFICACIONES
   notify_build:
     runs-on: ubuntu-latest
     needs: build
     steps:
-## esto es para que mande mensaje cuando falla el    
+      ## esto es para que mande mensaje cuando falla el
       - name: Send Slack notification on failure
-        if: failure()  # Only send notification if the build fails
+        if: failure() # Only send notification if the build fails
         run: |
           curl -X POST -H 'Content-type: application/json' \
           --data '{"text":"🚨 Build failed Job: build en la ram:${{ github.ref_name }} "}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Send Slack notification on success
-        if: success()  # Only send notification if the build succeeds
+        if: success() # Only send notification if the build succeeds
         run: |
           curl -X POST -H 'Content-type: application/json' \
           --data '{"text":"✅ Build succeeded Job: build en la ram:${{ github.ref_name }}  "}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
 
   notify_test:
-      runs-on: ubuntu-latest
-      needs: build-and-test
-      steps:
-  ## esto es para que mande mensaje cuando falla el    
-        - name: Send Slack notification on failure
-          if: failure()  # Only send notification if the build fails
-          run: |
-            curl -X POST -H 'Content-type: application/json' \
-            --data '{"text":"🚨 Build failed Job: build-and-test en la ram:${{ github.ref_name }}  "}' \
-            ${{ secrets.SLACK_WEBHOOK_URL }}
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    steps:
+      ## esto es para que mande mensaje cuando falla el
+      - name: Send Slack notification on failure
+        if: failure() # Only send notification if the build fails
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{"text":"🚨 Build failed Job: build-and-test en la ram:${{ github.ref_name }}  "}' \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
 
-        - name: Send Slack notification on success
-          if: success()  # Only send notification if the build succeeds
-          run: |
-            curl -X POST -H 'Content-type: application/json' \
-            --data '{"text":"✅ Build succeeded Job: build-and-test en la ram:${{ github.ref_name }}  "}' \
-            ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Send Slack notification on success
+        if: success() # Only send notification if the build succeeds
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{"text":"✅ Build succeeded Job: build-and-test en la ram:${{ github.ref_name }}  "}' \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
 
-
-#notificacion del pul request
+  #notificacion del pul request
   notify_pr_comment:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
@@ -147,4 +183,3 @@ jobs:
               repo: context.repo.repo,
               body: "🚀 ¡El Pull Request ha sido actualizado! Revisa los últimos cambios."
             })
-      

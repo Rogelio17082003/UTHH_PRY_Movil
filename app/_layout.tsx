@@ -1,50 +1,45 @@
-import { Slot, Stack,useRouter } from "expo-router";
-import { View, Text } from "react-native";
-import React, {useState,useEffect} from 'react'
-import Nav from "./nav";
+import { Slot, Stack, useRouter } from 'expo-router';
+import { View, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import Nav from './nav';
 import { AuthProvider } from './auth/AuthContext';
-import { getToken } from './auth/sessionService';  // Asegúrate de importar correctamente getToken
+import { getToken } from './auth/sessionService'; // Asegúrate de importar correctamente getToken
 
 export default function _layout() {
   const router = useRouter();
-  
-//
+
+  //
 
   useEffect(() => {
     const checkToken = async () => {
       try {
-        const token = await getToken();  // Espera a que el token sea obtenido correctamente
-        console.log("Token recuperado: " + token);
-
+        const token = await getToken(); // Espera a que el token sea obtenido correctamente
+        console.log('Token recuperado: ' + token);
 
         if (token) {
-          router.replace('/(tabs)');  // Si hay token, redirige a las tabs
-          console.log("este es el bueno " + token);
-        } 
+          router.replace('/(tabs)'); // Si hay token, redirige a las tabs
+          console.log('este es el bueno ' + token);
+        }
       } catch (error) {
         console.error('Error al obtener el token', error);
       }
     };
 
-    checkToken();  // Llama a la función asíncrona dentro del useEffect
-  }, []); 
-
+    checkToken(); // Llama a la función asíncrona dentro del useEffect
+  }, []);
 
   return (
     <AuthProvider>
       <View style={{ flex: 1 }}>
         <Stack
           screenOptions={{
-            headerTitle: "",
+            headerTitle: '',
             headerLeft: () => <Nav />,
-
           }}
-
         >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
       </View>
     </AuthProvider>
-
-  )
+  );
 }
