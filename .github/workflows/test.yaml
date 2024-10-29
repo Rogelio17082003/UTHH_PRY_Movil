@@ -60,6 +60,7 @@ jobs:
 ##PRUEBAS UNITARIAS
   test:
       runs-on: ubuntu-latest
+      needs: build-and-test
 
       steps:
         - name: Checkout code
@@ -81,6 +82,7 @@ jobs:
 ##LINT
   eslint:
       runs-on: ubuntu-latest
+      needs: build-and-test
 
       steps:
         - name: Checkout code
