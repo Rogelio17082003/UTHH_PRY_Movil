@@ -1,1 +1,15 @@
+# Ignorar node_modules
 node_modules/
+
+# Ignorar archivos de entorno
+.env
+
+# Ignorar cachés y archivos generados por el sistema
+.DS_Store
+.expo/
+.expo-shared/
+.vscode/
+
+# Ignorar archivos de compilación
+build/
+dist/
