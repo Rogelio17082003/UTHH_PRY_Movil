@@ -54,7 +54,7 @@ const MateriasDocente = () => {
   const determinePeriod = (monthYear: any) => {
     const [month, year] = monthYear.split('/').map(Number);
     let period;
-    let partial;
+    let partial; 
     if (month >= 9 && month <= 12) period = `${year}${3}`;
     else if (month >= 1 && month <= 4) period = `${year}${1}`;
     else if (month >= 5 && month <= 8) period = `${year}${2}`;
