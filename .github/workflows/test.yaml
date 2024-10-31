@@ -61,7 +61,7 @@ jobs:
       - name: Lint code with Expo
         run: expo lint --max-warnings=0
 
-  # Construcción para Android e iOS
+  # Construcción para Android e iOSss
   build:
     runs-on: ubuntu-latest
     needs: build-and-test
