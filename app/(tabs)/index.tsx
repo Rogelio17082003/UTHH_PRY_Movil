@@ -140,7 +140,7 @@ const MateriasDocente = () => {
      {materias.length > 0 ? (
         <FlatList
           data={materias}
-          keyExtractor={(item) => item.vchClvMateria} // Clave única
+          keyExtractor={(item) => item.vchClvMateria} // Clave única  para recorrer
           renderItem={({ item }) => (
             <Card style={tw`mb-4`}>
               <Card.Content>
