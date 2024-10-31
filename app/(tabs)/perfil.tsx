@@ -14,7 +14,7 @@ export default function Perfil() {
     const { userData, logout } = useAuth();  // Usa el hook de autenticación
     const navigation = useNavigation();
 
-
+ //
 
     const profileImageUrl = userData && userData.vchFotoPerfil
         ? `https://robe.host8b.me/assets/imagenes/${userData.vchFotoPerfil}`
@@ -49,7 +49,7 @@ export default function Perfil() {
 
         ;
         if (!userData) {
-            return <Text>Loading...</Text>;
+            return <Text>Cargando...</Text>;
           }
           
           
@@ -57,7 +57,7 @@ export default function Perfil() {
 
     return (
         <ScrollView style={tw`flex-1 bg-white p-4`}>
-            {/* Información de usuario */}
+            {/* Información de usuario para poder ver su perfil */}
             <View style={tw`flex-row mb-6 items-start`}>
                 <Avatar.Image size={80} source={{ uri: profileImageUrl }} />
                 <View style={tw`flex-1 ml-4`}>

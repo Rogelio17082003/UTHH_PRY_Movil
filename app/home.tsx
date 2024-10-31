@@ -4,7 +4,7 @@ import tw from 'tailwind-react-native-classnames';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Nav from './nav';
-
+//
 
 export default function Home() {
     return (

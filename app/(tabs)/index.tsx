@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, Alert, FlatList } from 'react-native';
-import { Card, Button } from 'react-native-paper';
+import { ScrollView, View, TouchableOpacity, Alert, FlatList } from 'react-native';
+import { Card, Button,Text } from 'react-native-paper';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import * as XLSX from 'xlsx';
 import * as FileSystem from 'expo-file-system';
@@ -88,7 +88,7 @@ const MateriasDocente = () => {
     const day = date.getUTCDate().toString().padStart(2, '0');
     const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
     const year = date.getUTCFullYear();
-    return `${day}/${month}/${year}`;
+    return `${day}/${month}/${year}`; 
   };
 
   const onloadMaterias = async () => {
@@ -136,28 +136,29 @@ const MateriasDocente = () => {
         </Button>
       </View>
 
-      {/* List of Materias */}
-      {materias.length > 0 ? (
+     {/* List of Materias */}
+     {materias.length > 0 ? (
         <FlatList
           data={materias}
           keyExtractor={(item) => item.vchClvMateria} // Clave única
           renderItem={({ item }) => (
             <Card style={tw`mb-4`}>
-            <Card.Content>
-              <Text style={tw`text-lg font-bold`} >Hola {item.vchClvMateria}</Text>
-              <Text>{item.vchNomMateria}</Text>
-              <Text>Periodo: {item.NombrePeriodo}</Text>
-            </Card.Content>
-          </Card>
-          
+              <Card.Content>
+                <Text style={tw`text-lg font-bold`}>
+                  Hola {item.vchClvMateria}
+                </Text>
+                <Text>{item.vchNomMateria}</Text>
+                <Text>Periodo: {item.NombrePeriodo}</Text>
+              </Card.Content>
+            </Card>
           )}
-
-
         />
       ) : (
         <View style={tw`flex-1 justify-center items-center`}>
           <FontAwesome name="frown-o" size={50} color="gray" />
-          <Text style={tw`text-gray-500 mt-4`}>No hay clases agregadas. Añade una clase para empezar.</Text>
+          <Text style={tw`text-gray-500 mt-4`}>
+            No hay clases agregadas. Añade una clase para empezar.
+          </Text>
         </View>
       )}
 
