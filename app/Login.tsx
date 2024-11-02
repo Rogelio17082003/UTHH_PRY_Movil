@@ -111,7 +111,7 @@ export default function Login() {
           headerTitle: "Iniciar Sesión",
           headerRight: () => (
             <Image
-              source={require('../assets/images/secondary-logo.png')} // Coloca el enlace a tu logo aquí
+              source={require('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQA7EC66d-k20-KYyWRsw2G4BP0ASSWODTiEw&s')} // Coloca el enlace a tu logo aquí
               style={{ width: 100, height: 40 }} // Ajusta el tamaño del logo
               resizeMode="contain"
             />
