@@ -111,7 +111,7 @@ export default function Login() {
           headerTitle: "Iniciar Sesión",
           headerRight: () => (
             <Image
-              source={require('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQA7EC66d-k20-KYyWRsw2G4BP0ASSWODTiEw&s')} // Coloca el enlace a tu logo aquí
+              source={require('../assets/images/secondary-logo.png')} // Coloca el enlace a tu logo aquí
               style={{ width: 100, height: 40 }} // Ajusta el tamaño del logo
               resizeMode="contain"
             />
@@ -127,7 +127,7 @@ export default function Login() {
         {/* Imagen de fondo en la parte superior */}
         <View style={tw`h-1/3`}>
           <ImageBackground
-            source={require('../assets/images/portada.png')}
+            source={require('../assets/images/partial-react-logo.png')}
             style={tw`w-full h-full`}
             resizeMode="cover"
           />
