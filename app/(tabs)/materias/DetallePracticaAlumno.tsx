@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Text, ActivityIndicator, Dimensions} from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import React, { useState, useEffect, memo } from 'react';
+import { View, ScrollView, Text, ActivityIndicator, Dimensions } from 'react-native';
+import { useRoute, } from '@react-navigation/native';
 import { Card, Title, Paragraph, Divider } from 'react-native-paper';
 import tw from 'tailwind-react-native-classnames';
 import { useAuth } from '../../auth/useAuth';
 import RenderHTML from 'react-native-render-html';
 import { TitlePage, TitleSection, ContentTitle, Paragraphs, DescriptionActivity } from '../../../components/Text';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 
+interface Props {
+  type?: string;
+}
 interface Rubrica {
   criterioDescripcion: string;
   calificacionObtenida: string;
@@ -20,10 +24,11 @@ interface DetalleActividad {
 }
 const screenWidth = Dimensions.get('window').width;
 
-const DetallePracticaAlumno: React.FC = () => {
+
+export default function Detallepracticaalumno () {
   const { userData } = useAuth();
   const route = useRoute();
-  const { intNumeroPractica } = route.params as any;
+  const { intNumeroPractica } = useLocalSearchParams();
 
   const [detalleActividad, setDetalleActividad] = useState<DetalleActividad | null>(null);
   const [rubricaData, setRubricaData] = useState<Rubrica[]>([]);
@@ -34,6 +39,9 @@ const DetallePracticaAlumno: React.FC = () => {
 
   const apiUrl = 'https://robe.host8b.me/WebServices/';
 
+
+
+
   const fetchCalificacionesAlumno = async () => {
     try {
       const response = await fetch(`${apiUrl}/accionesAlumnos.php`, {
@@ -41,7 +49,7 @@ const DetallePracticaAlumno: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           idPractica: intNumeroPractica,
-          alumnoMatricula: userData.vchMatricula,
+          alumnoMatricula: userData.vchMatricula, 
         }),
       });
       const result = await response.json();
@@ -73,18 +81,27 @@ const DetallePracticaAlumno: React.FC = () => {
       setIsLoading(false);
     }
   };
+ 
+  const calculateTotalScores = () => {
+    const totalMaximo = rubricaCalAlumno.reduce((acc, rubrica) => acc + (parseFloat(rubrica.valorMaximo) || 0), 0);
+    const totalObtenido = rubricaCalAlumno.reduce((acc, rubrica) => acc + (parseFloat(rubrica.calificacionObtenida) || 0), 0);
+    setPuntajeTotalCal(totalMaximo);
+    setPuntajeObtenido(totalObtenido);  
+  };
 
+ 
   useEffect(() => {
-    const calculateTotalScores = () => {
-      const totalMaximo = rubricaCalAlumno.reduce((acc, rubrica) => acc + (parseFloat(rubrica.valorMaximo) || 0), 0);
-      const totalObtenido = rubricaCalAlumno.reduce((acc, rubrica) => acc + (parseFloat(rubrica.calificacionObtenida) || 0), 0);
-      setPuntajeTotalCal(totalMaximo);
-      setPuntajeObtenido(totalObtenido);
-    };
-    fetchActividad();
-    fetchCalificacionesAlumno();
-    calculateTotalScores();
-  }, [rubricaCalAlumno]);
+    if(intNumeroPractica )
+    {
+      fetchActividad();
+      fetchCalificacionesAlumno();
+      calculateTotalScores();  
+    }
+
+    
+  }, [rubricaCalAlumno]);        
+
+
 
   if (isLoading) {
     return (
@@ -98,22 +115,22 @@ const DetallePracticaAlumno: React.FC = () => {
     <ScrollView contentContainerStyle={tw`p-4 bg-gray-100`}>
       {detalleActividad && (
         <View style={tw`mb-4`}>
-        <TitlePage label={detalleActividad.vchNombre} />
-        <Paragraphs className="ml-3" label={detalleActividad.vchDescripcion} />
+          <TitlePage label={detalleActividad.vchNombre} />
+          <Paragraphs className="ml-3" label={detalleActividad.vchDescripcion} />
 
           <Card style={tw`bg-white mb-4`}>
             <Card.Content>
-            <TitleSection label="Instrucciones" />
-            <RenderHTML
-              contentWidth={screenWidth}
-              source={{ html: detalleActividad.vchInstrucciones }}
-              tagsStyles={{
-                p: { marginBottom: 10 },
-                li: { marginLeft: 20 },
-                h1: { fontSize: 24, fontWeight: 'bold', marginBottom: 12 },
-                h2: { fontSize: 20, fontWeight: 'bold', marginBottom: 10 },
-              }}
-            />
+              <TitleSection label="Instrucciones" />
+              <RenderHTML
+                contentWidth={screenWidth}
+                source={{ html: detalleActividad.vchInstrucciones }}
+                tagsStyles={{
+                  p: { marginBottom: 10 },
+                  li: { marginLeft: 20 },
+                  h1: { fontSize: 24, fontWeight: 'bold', marginBottom: 12 },
+                  h2: { fontSize: 20, fontWeight: 'bold', marginBottom: 10 },
+                }}
+              />
             </Card.Content>
           </Card>
         </View>
@@ -121,8 +138,8 @@ const DetallePracticaAlumno: React.FC = () => {
 
       <Card style={tw`mb-4 bg-white`}>
         <Card.Content>
-        <TitleSection label="Rúbrica de Evaluación" />
-        <Divider style={tw`my-2`} />
+          <TitleSection label="Rúbrica de Evaluación" />
+          <Divider style={tw`my-2`} />
           {rubricaCalAlumno.map((rubrica, index) => (
             <View key={index} style={tw`flex-row justify-between items-center py-2 border-b border-gray-200`}>
               <Text style={tw`text-gray-900 flex-1`}>{rubrica.criterioDescripcion}</Text>
@@ -140,4 +157,3 @@ const DetallePracticaAlumno: React.FC = () => {
   );
 };
 
-export default DetallePracticaAlumno;

@@ -29,7 +29,7 @@ export default function Actividades() {
   const { userData } = useAuth();
   const [actividades, setActividades] = useState<Actividad[]>([]);
 
-  
+
 
   useEffect(() => {
     if (userData && userData.vchMatricula) {
@@ -55,15 +55,15 @@ export default function Actividades() {
 
       const result = await response.json();
       console.log("datoalumnos: ", result)
-      
+
       if (result.done) {
         setActividades(result.message as Actividad[]);
-        
+
       } else {
         console.error('Error en el registro:', result.message);
       }
     } catch (error) {
-    
+
     }
   };
 
@@ -102,33 +102,57 @@ export default function Actividades() {
           Valor: {item.fltValor} puntos
         </Text>
 
-         {/* Botón para cerrar sesión */}
-      <View style={tw`mt-4 mb-6 mr-4`}>
+        {/* Botón para cerrar sesión */}
+        <View style={tw`mt-4 mb-6 mr-4`}>
+          {/*
+            <Button
+              mode="contained"
+
+              onPress={() =>
+                router.push({
+                  // @ts-ignore
+                  pathname: '/(tabs)/materias/detalleActividad',
+                  params: {
+                    clvMateria: clvMateria,
+                    matriculaAlumno: userData.vchMatricula,
+                    chrGrupo: chrGrupo,
+                    periodo: periodo,
+                    numeroActividad: actividades[0]?.intClvActividad,
+                    numeroActividadCurso: actividades[0]?.intIdActividadCurso
+
+                  }
+                })
+              }
+            >
+              Ver mas
+            </Button>*/
+          }
           <Button
             mode="contained"
-
-            onPress={() => 
+            onPress={() =>
               router.push({
                 // @ts-ignore
                 pathname: '/(tabs)/materias/detalleActividad',
                 params: {
-                  clvMateria: clvMateria  ,
-                  matriculaAlumno:userData.vchMatricula ,
-                  chrGrupo:chrGrupo,
-                  periodo:periodo ,
+                  clvMateria: clvMateria,
+                  matriculaAlumno: userData.vchMatricula,
+                  chrGrupo: chrGrupo,
+                  periodo: periodo,
                   numeroActividad: actividades[0]?.intClvActividad,
-                  numeroActividadCurso:actividades[0]?.intIdActividadCurso
+                  numeroActividadCurso: actividades[0]?.intIdActividadCurso
 
                 }
               })
             }
           >
-            Ver mas
+            <Text style={tw`mb-2 text-sm font-medium text-gray-900`}>
+              Ver mas
+            </Text>
           </Button>
         </View>
 
       </View>
-     
+
     </List.Accordion>
   );
 
@@ -149,9 +173,9 @@ export default function Actividades() {
         data={actividades}
         keyExtractor={(actividad) => actividad.intClvActividad.toString()}
         renderItem={renderActivity}
-        
+
       />
-      
+
     </View>
   );
 
@@ -164,15 +188,15 @@ export default function Actividades() {
         <View style={{ flexDirection: 'row', borderBottomWidth: 2, borderBottomColor: '#007bff', marginBottom: 10, alignItems: 'center' }}>
           <MaterialIcons name="event-note" size={24} color="#007bff" />
           <Text style={{ fontSize: 16, color: '#007bff', marginLeft: 8 }}>Actividades </Text>
-          
-          
-          
+
+
+
         </View>
-        
+
       )}
       renderItem={renderParcial}
-      
+
     />
-    
+
   );
 }

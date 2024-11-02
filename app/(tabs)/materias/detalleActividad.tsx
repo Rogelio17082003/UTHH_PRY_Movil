@@ -25,10 +25,10 @@ interface Actividad {
   Modalidad: string;
 }
 
-const DetalleActividadAlumno: React.FC = () => {
+export default function DetalleActividadAlumno ()  {
   const { userData } = useAuth();
   const route = useRoute();
-  const { clvMateria, chrGrupo, periodo,numeroActividad, numeroActividadCurso} = useLocalSearchParams();
+  const { clvMateria, chrGrupo, periodo, numeroActividad, numeroActividadCurso } = useLocalSearchParams();
 
   const [actividad, setActividad] = useState<Actividad | null>(null);
   const [practicas, setPracticas] = useState<Practica[]>([]);
@@ -59,7 +59,7 @@ const DetalleActividadAlumno: React.FC = () => {
         setPracticas(data.message.practicasActividad);
       }
     } catch (error) {
-     // Alert.alert('Error', 'Error 500: Ocurrió un problema en el servidor. Intenta nuevamente más tarde.');
+      // Alert.alert('Error', 'Error 500: Ocurrió un problema en el servidor. Intenta nuevamente más tarde.');
     } finally {
       setIsLoading(false);
     }
@@ -93,8 +93,8 @@ const DetalleActividadAlumno: React.FC = () => {
       await fetchActividad();
       await fetchDatosCalAlumn();
     };
-    fetchData();
-  }, [clvMateria, chrGrupo, periodo, numeroActividad]);
+    fetchData(); 
+  }, []);
 
   const practicasConCalificaciones = (practicas || []).map((practica) => {
     const calificacion = datosCalAlumn?.find((c) => c.idPractica === practica.idPractica);
@@ -117,31 +117,31 @@ const DetalleActividadAlumno: React.FC = () => {
     <ScrollView contentContainerStyle={tw`p-4 bg-gray-100`}>
       {actividad && (
         <View style={tw`mb-4`}>
-                <TitlePage label={actividad.Nombre_Actividad} />
-                <DescriptionActivity label={actividad.Descripcion_Actividad}/>
-          
+          <TitlePage label={actividad.Nombre_Actividad} />
+          <DescriptionActivity label={actividad.Descripcion_Actividad} />
+
 
           <Card style={tw`mb-4 bg-white`}>
             <Card.Content>
-            <TitleSection label="Detalles de la Actividad" />
+              <TitleSection label="Detalles de la Actividad" />
 
-            <ContentTitle label="Fecha de Solicitud: " />
-            <Paragraphs label={actividad.Fecha_Solicitud} />
+              <ContentTitle label="Fecha de Solicitud: " />
+              <Paragraphs label={actividad.Fecha_Solicitud} />
 
-            <ContentTitle label="Fecha de Entrega: " />
-            <Paragraphs label={actividad.Fecha_Entrega} />
+              <ContentTitle label="Fecha de Entrega: " />
+              <Paragraphs label={actividad.Fecha_Entrega} />
 
-            <ContentTitle label="Valor de la Actividad: " />
-            <Paragraphs label={actividad.Valor_Actividad} />
+              <ContentTitle label="Valor de la Actividad: " />
+              <Paragraphs label={actividad.Valor_Actividad} />
 
-            <ContentTitle label="Calificación Obtenida: " />
-            <Paragraphs label={datosCalAlumn.length > 0 ? datosCalAlumn[0].calificacionActividadAlumno || '0' : '0'} />
+              <ContentTitle label="Calificación Obtenida: " />
+              <Paragraphs label={datosCalAlumn.length > 0 ? datosCalAlumn[0].calificacionActividadAlumno || '0' : '0'} />
 
-            <ContentTitle label="Clave de Instrumento:" />
-            <Paragraphs label={actividad.Clave_Instrumento} />
+              <ContentTitle label="Clave de Instrumento:" />
+              <Paragraphs label={actividad.Clave_Instrumento} />
 
-            <ContentTitle label="Modalidad:" />
-            <Paragraphs label={actividad.Modalidad} />
+              <ContentTitle label="Modalidad:" />
+              <Paragraphs label={actividad.Modalidad} />
 
             </Card.Content>
           </Card>
@@ -151,14 +151,26 @@ const DetalleActividadAlumno: React.FC = () => {
       <View>
         {practicasConCalificaciones.length > 0 ? (
           practicasConCalificaciones.map((practica) => (
-            <Card key={practica.idPractica} style={tw`mb-4 bg-white h-36`}          
-                
-              >
+            <Card key={practica.idPractica} style={tw`mb-4 bg-white h-36`}
+              onPress={() =>
+                router.push({
+                  // @ts-ignore
+                  pathname: '/(tabs)/materias/DetallePracticaAlumno',
+                  params: {
+                    
+                    intNumeroPractica: practica.idPractica,
+                   
+
+                  }
+                })
+              }
+
+            >
               <Card.Content>
-              <View style={tw`absolute top-2 right-2 bg-gray-800 px-2 py-1 rounded-full`}>
-      <Text style={tw`text-white text-xs`}>
-      {practica.calificacionObtenidaAlumno}/{practica.calificacionPractica}</Text>
-    </View>
+                <View style={tw`absolute top-2 right-2 bg-gray-800 px-2 py-1 rounded-full`}>
+                  <Text style={tw`text-white text-xs`}>
+                    {practica.calificacionObtenidaAlumno}/{practica.calificacionPractica}</Text>
+                </View>
                 <Title style={tw`text-xl font-bold text-gray-900 text-center`}>{practica.vchNombre}</Title>
 
                 <Paragraph style={tw`text-sm text-gray-500 text-center`}>{practica.vchDescripcion}</Paragraph>
@@ -176,4 +188,4 @@ const DetalleActividadAlumno: React.FC = () => {
   );
 };
 
-export default DetalleActividadAlumno;
+
