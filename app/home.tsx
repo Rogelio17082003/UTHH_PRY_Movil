@@ -3,51 +3,66 @@ import { ScrollView, View, Text, Image } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import Nav from './nav';
+import { FontAwesome } from '@expo/vector-icons';
+
+import { TitlePage, TitleSection, ContentTitle, Paragraphs } from '../components/Text';
 //
 
 export default function Home() {
     return (
         <View>
             
-            <ScrollView>
-
-                {/* Cuerpo */}
-                <View style={tw`bg-white py-8 px-6 mt-1`}>
-                    <View style={tw`flex flex-row items-center mb-6`}>
-                        <View style={tw`relative p-6 rounded-full bg-blue-100 `}>
-                            <FontAwesome6 name="user-graduate" size={60} style={tw`text-blue-600 `} />
-                        </View>
-
-                        <View style={tw`absolute w-40 h-40 rounded-full bg-blue-200 opacity-50 `} />
-                        <View style={tw`absolute w-28 h-28 rounded-full bg-blue-300 opacity-40 `} />
+            <ScrollView style={tw`bg-white p-4 bg-gray-100`}>
+                <View style={tw`rounded-lg bg-white shadow`}>
+                    {/* Carousel */}
+                    <View style={tw`h-56   mb-8`}>
+                        <Image
+                        source={{ uri: 'https://robe.host8b.me/assets/uthhPanel-Cz40pBIq.png' }}
+                        style={tw`w-full h-full`}
+                        resizeMode="cover"
+                        />
                     </View>
-                    <Text style={tw`text-xl font-bold text-center`}>Para los Alumnos</Text>
-                    <Text style={tw`mt-4 text-gray-500  text-center`}>
-                        En esta plataforma, podrás consultar las calificaciones de las prácticas que te asignan tus docentes. Revisa tus avances y mantente al tanto de tus resultados en tiempo real.
-                    </Text>
+
+                    {/* Section for Students */}
+                    <View style={tw`py-16 px-6 flex flex-col  items-center`}>
+                        <View style={tw`relative items-center mb-12`}>
+                        <View style={[tw`bg-blue-100 p-6 rounded-full z-10`]}>
+                            <FontAwesome name="graduation-cap" size={48} style={tw`text-blue-600`} />
+                        </View>
+                        {/* Pulsating circles */}
+                        <View style={[tw`absolute rounded-full bg-blue-200 opacity-50`, { width: 160, height: 160, top: 16, left: 32 }]} />
+                        <View style={[tw`absolute rounded-full bg-blue-300 opacity-40`, { width: 112, height: 112, top: 48, left: 48 }]} />
+                        </View>
+                        <View style={tw`text-center`}>
+                        <TitlePage label="Para los Alumnos" />
+                        <Text style={tw`mt-4 text-gray-600 text-lg  font-light`}>
+                            En esta plataforma, podrás consultar las calificaciones de las prácticas que te asignan tus docentes. Revisa tus avances,
+                            mantente al tanto de tus resultados en tiempo real y trabaja para mejorar en cada actividad.
+                        </Text>
+                        </View>
+                    </View>
+
+                    {/* Section for Teachers */}
+                    <View style={tw`py-16 px-6 flex flex-col  items-center`}>
+                        <View style={tw`relative items-center mb-12`}>
+                        <View style={[tw`bg-green-100 p-6 rounded-full z-10`]}>
+                            <FontAwesome name="sort" size={48} style={tw`text-green-600`} />
+                        </View>
+                        {/* Pulsating circles */}
+                        <View style={[tw`absolute rounded-full bg-green-200 opacity-50`, { width: 160, height: 160, top: 16, right: 32 }]} />
+                        <View style={[tw`absolute rounded-full bg-green-300 opacity-40`, { width: 112, height: 112, top: 48, right: 48 }]} />
+                        </View>
+                        <View style={tw`text-center `}>
+                        <TitlePage label="Para los Docentes" />
+                        <Text style={tw`mt-4 text-gray-600 text-lg font-light `}>
+                            Como docente, tendrás la posibilidad de crear actividades y prácticas personalizadas para tus alumnos, y evaluarlas en tiempo real. 
+                            Facilita el seguimiento del desempeño de tus estudiantes y brinda retroalimentación inmediata para potenciar su aprendizaje.
+                        </Text>
+                        </View>
+                    </View>
                 </View>
 
-                {/* Sección para los Docentes */}
-                <View style={tw`bg-white py-8 px-6`}>
-                    <View style={tw`flex items-end mb-6`}>
-                        <View style={tw`relative p-6 rounded-full bg-green-100 `}>
-                            <FontAwesome5 name="chalkboard-teacher" size={60} style={tw`text-green-600 `} />
-                        </View>
-
-                        {/* Animaciones de pulsación */}
-                        <View style={tw`absolute w-40 h-40 rounded-full bg-green-200 opacity-50 `} />
-                        <View style={tw`absolute w-28 h-28 rounded-full bg-green-300 opacity-40 `} />
-                    </View>
-                    <Text style={tw`text-xl font-bold text-center`}>Para los Docentes</Text>
-                    <Text style={tw`mt-4 text-gray-600  text-center`}>
-                        Como docente, tendrás la posibilidad de crear actividades y prácticas personalizadas para tus alumnos, y evaluarlas en tiempo real.
-                    </Text>
-
-
-                </View>
-            </ScrollView >
-
+            </ScrollView>
         </View>
     )
 }

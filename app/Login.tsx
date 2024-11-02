@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import tw from 'tailwind-react-native-classnames';
 import { useForm } from 'react-hook-form';
 import { CustomInput, CustomInputPassword, LoadingButton } from '../components/inputs';
+import { TitlePage, TitleSection, ContentTitle, Paragraphs } from '../components/Text';
 import { Checkbox } from 'react-native-paper';
 import { View, Text, ImageBackground, TouchableOpacity, Image, Button, Alert as NativeAlert } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
@@ -107,7 +108,7 @@ export default function Login() {
           headerTintColor: "black",
           headerLeft: undefined,
           headerBackVisible: true,
-          headerTitle: "Login",
+          headerTitle: "Iniciar Sesión",
           headerRight: () => (
             <Image
               source={require('../assets/images/secondary-logo.png')} // Coloca el enlace a tu logo aquí
@@ -121,7 +122,7 @@ export default function Login() {
 
         }}
       />
-      <View style={tw`flex-1`}>
+      <View style={tw` bg-white flex-1`}>
 
         {/* Imagen de fondo en la parte superior */}
         <View style={tw`h-1/3`}>
@@ -132,18 +133,20 @@ export default function Login() {
           />
         </View>
 
-        <View style={tw`flex-1 p-4`}>
-          {/* Imagen de la Universidad */}
-          <Image
-            source={require('../assets/images/secondary-logo.png')}
-            style={tw`w-24 h-16 self-center mb-5`}
-          />
+        <View style={tw`bg-white pt-4 px-8`}>
+          <View style={tw`flex items-center`}>
+            {/* Imagen de la Universidad */}
+            <Image
+              source={require('../assets/images/secondary-logo.png')}
+              style={tw`w-24 h-16 self-center mb-5`}
+              resizeMode="contain" 
+            />
 
-          {/* Título 1 */}
-          <Text style={tw`text-xl font-bold text-center mb-2`}>Bienvenido de vuelta</Text>
-          <Text style={tw`text-sm text-gray-500 text-center mb-5`}>
-            Empieza donde lo dejaste, inicia sesión para continuar.
-          </Text>
+            {/* Título 1 */}
+            <TitlePage label={"Bienvenido de vuelta"} />
+            <Paragraphs label={"Empieza donde lo dejaste, inicia sesión para continuar."} />
+          </View>
+
 
           <CustomInput
             label="Matrícula"
