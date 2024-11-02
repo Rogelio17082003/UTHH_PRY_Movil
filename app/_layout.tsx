@@ -1,14 +1,14 @@
-import { Slot, Stack,useRouter } from "expo-router";
+import { Slot, Stack, useRouter } from "expo-router";
 import { View, Text } from "react-native";
-import React, {useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Nav from "./nav";
 import { AuthProvider } from './auth/AuthContext';
 import { getToken } from './auth/sessionService';  // Asegúrate de importar correctamente getToken
 
 export default function _layout() {
   const router = useRouter();
+
   
-//
 
   useEffect(() => {
     const checkToken = async () => {
@@ -18,16 +18,16 @@ export default function _layout() {
 
 
         if (token) {
-          router.replace('/(tabs)');  // Si hay token, redirige a las tabs
+          router.replace('/(tabs)/materias');  // Si hay token, redirige a las tabs
           console.log("este es el bueno " + token);
-        } 
+        }
       } catch (error) {
         console.error('Error al obtener el token', error);
       }
     };
 
     checkToken();  // Llama a la función asíncrona dentro del useEffect
-  }, []); 
+  }, []);
 
 
   return (
@@ -42,7 +42,11 @@ export default function _layout() {
 
         >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          
+          
+          
         </Stack>
+
       </View>
     </AuthProvider>
 
