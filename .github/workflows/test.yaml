@@ -65,7 +65,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: build-and-test
-    #if: github.ref == 'refs/heads/master'  # Ejecutar solo en la rama master
+    if: github.ref == 'refs/heads/master'  # Ejecutar solo en la rama master
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -93,7 +93,7 @@ jobs:
           # Obtén la última build de EAS
           - name: Obtener información de la última build
             env:
-              EAS_ACCESS_TOKEN: ${{ secrets.EAS_ACCESS_TOKEN }}
+              EAS_ACCESS_TOKEN: ${{ secrets..EXPO_TOKEN }}
             run: |
               # Obtén la información de la última build para el proyecto
               RESPONSE=$(curl -s \
