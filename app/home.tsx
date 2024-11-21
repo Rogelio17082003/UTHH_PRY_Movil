@@ -17,7 +17,7 @@ export default function Home() {
                     {/* Carousel */}
                     <View style={tw`h-56   mb-8`}>
                         <Image
-                        source={{ uri: 'https://robe.host8b.me/assets/uthhPanel-Cz40pBIq.png' }}
+                        source={require('../assets/images/portada2.jpg')}
                         style={tw`w-full h-full`}
                         resizeMode="cover"
                         />

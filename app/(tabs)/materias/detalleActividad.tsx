@@ -27,7 +27,7 @@ interface Actividad {
 
 export default function DetalleActividadAlumno ()  {
   const { userData } = useAuth();
-  const route = useRoute();
+  //const route = useRoute();
   const { clvMateria, chrGrupo, periodo, numeroActividad, numeroActividadCurso } = useLocalSearchParams();
 
   const [actividad, setActividad] = useState<Actividad | null>(null);

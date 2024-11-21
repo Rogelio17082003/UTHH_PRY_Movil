@@ -5,6 +5,12 @@ import Nav from "./nav";
 import { AuthProvider } from './auth/AuthContext';
 import { getToken } from './auth/sessionService';  // Asegúrate de importar correctamente getToken
 
+
+///notificaciones 
+import firebase from 'firebase/app';
+import 'firebase/messaging';
+import Constants from 'expo-constants';
+
 export default function _layout() {
   const router = useRouter();
 
@@ -28,6 +34,18 @@ export default function _layout() {
 
     checkToken();  // Llama a la función asíncrona dentro del useEffect
   }, []);
+
+
+  useEffect(() => {
+    
+    
+    
+  }, []);
+
+
+
+
+
 
 
   return (

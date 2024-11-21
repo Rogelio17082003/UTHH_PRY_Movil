@@ -8,6 +8,7 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 import { AuthProvider } from '../auth/AuthContext';
+import Entypo from '@expo/vector-icons/Entypo';
 
 
 export default function TabLayout() {
@@ -28,7 +29,9 @@ export default function TabLayout() {
           options={{
             title: 'Materias',
             tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
+              <TabBarIcon name={focused ? 'book' : 'book-outline'} color={"#00883e"} />
+              //<Entypo name="book" size={28} color={"#00883e"} />
+              //<Entypo name={focused ? 'book' : 'book-outline'} color={color} />
             ),
             //  href: null, para ocultar la ruta
           }}
@@ -40,7 +43,7 @@ export default function TabLayout() {
           options={{
             title: 'Perfil',
             tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
+              <TabBarIcon name={focused ? 'person' : 'person-outline'} color={"#00883e"} />
             ),
             //  href: null, para ocultar la ruta
           }}

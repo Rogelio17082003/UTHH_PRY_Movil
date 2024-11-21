@@ -25,7 +25,7 @@ export default function Nav() {
             ]}
         >
             {/* Logotipo */}
-            <View style={tw`flex-1 items-center`}>
+            <View style={tw`flex-1 items-start mr-16`}>
                 <Image
                     source={{ uri: 'https://robe.host8b.me/assets/secondary-logo-BL9o4fsR.png' }} // Aquí pon la URL del logotipo
                     style={tw`w-16 h-16`} // Tamaño del logotipo
@@ -34,14 +34,14 @@ export default function Nav() {
             </View>
 
             {/* Texto "UTHH Virtual" */}
-            <View style={tw`flex-auto items-center`}>
+            <View style={tw`flex-auto  items-end`}>
                 <Text style={[tw`text-lg  `]}>
                     UTHH Virtual
                 </Text>
             </View>
 
             {/* Botón de Iniciar Sesión */}
-            <View style={tw`flex-auto items-start`}>
+            <View style={tw`flex-auto items-end`}>
                 <Button
                     style={[
                         tw`flex-none  rounded-lg items-center`,  // 'flex-1' para alinear el botón
@@ -49,10 +49,10 @@ export default function Nav() {
                     ]}
                     onPress={handleLogin}
                     rippleColor={"#02233A"}
-                    contentStyle={tw` px-4`}  // Asegura que el ripple cubra todo el botón
+                    contentStyle={tw` px-3`}  // Asegura que el ripple cubra todo el botón
                 >
-                    <FontAwesome6 name="user" size={18} color="white" style={tw`mr-2`} />
-                    <Text style={tw`text-white text-lg`}>Iniciar Sesión</Text>
+                    <FontAwesome6 name="user" size={16} color="white" style={tw`mr-1`} />
+                    <Text style={tw`text-white text-lg  `}>Iniciar Sesión</Text>
                 </Button>
                
             </View>

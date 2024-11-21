@@ -7,6 +7,7 @@ import { useAuth } from '../../auth/useAuth';
 import tw from 'tailwind-react-native-classnames';
 import { Avatar, Button } from 'react-native-paper';
 import { useRouter, Stack } from 'expo-router';
+import { CustomInputPassword, LoadingButton } from '../../../components/inputs';
 
 // Define la interfaz para la actividad
 interface Actividad {
@@ -28,7 +29,7 @@ export default function Actividades() {
   const { clvMateria, chrGrupo, periodo } = useLocalSearchParams();
   const { userData } = useAuth();
   const [actividades, setActividades] = useState<Actividad[]>([]);
-
+  const [isLoading, setIsLoading] = useState(false);
 
 
   useEffect(() => {
@@ -129,6 +130,7 @@ export default function Actividades() {
           }
           <Button
             mode="contained"
+            buttonColor="#00883e" // Para `react-native-paper`
             onPress={() =>
               router.push({
                 // @ts-ignore
@@ -140,15 +142,16 @@ export default function Actividades() {
                   periodo: periodo,
                   numeroActividad: actividades[0]?.intClvActividad,
                   numeroActividadCurso: actividades[0]?.intIdActividadCurso
-
                 }
               })
             }
           >
-            <Text style={tw`mb-2 text-sm font-medium text-gray-900`}>
+            <Text style={[tw`mb-2 text-sm font-medium text-gray-900`,{color: 'white'}]}>
               Ver mas
             </Text>
           </Button>
+
+
         </View>
 
       </View>

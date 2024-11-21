@@ -49,7 +49,7 @@ export const getUserData = async () => {
 };
 
 // Eliminar los datos del usuario
-export const removeUserData = async () => {
+export  const removeUserData = async () => {
   try {
     await AsyncStorage.removeItem('userData');
   } catch (error) {

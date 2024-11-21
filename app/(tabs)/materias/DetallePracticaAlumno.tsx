@@ -27,8 +27,8 @@ const screenWidth = Dimensions.get('window').width;
 
 export default function Detallepracticaalumno () {
   const { userData } = useAuth();
-  const route = useRoute();
-  const { intNumeroPractica } = useLocalSearchParams();
+  //const route = useRoute();
+  const { intNumeroPractica } = useLocalSearchParams(); 
 
   const [detalleActividad, setDetalleActividad] = useState<DetalleActividad | null>(null);
   const [rubricaData, setRubricaData] = useState<Rubrica[]>([]);

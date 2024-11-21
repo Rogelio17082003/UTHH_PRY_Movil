@@ -148,16 +148,17 @@ interface LoadingButtonProps {
 export const LoadingButton: React.FC<LoadingButtonProps> = ({ isLoading, normalLabel, loadingLabel, onPress,...rest }) => {
     return (
         <Button
-            mode="contained-tonal"
+            mode="contained"
             onPress={onPress}
             style={{
                 backgroundColor: isLoading ? '#02233A' : '#00883e',
-                width: '100%',
-                borderRadius: 15,
-                height: '10%'
+               // width: '100%',
+               // borderRadius: 15,
+               // height: '10%'
+
             }}
             disabled={isLoading}
-            contentStyle={{ display: "flex", height: '100%' }}
+            contentStyle={{ display: "flex", height: 'auto' }}
             {...rest}
 
         >
