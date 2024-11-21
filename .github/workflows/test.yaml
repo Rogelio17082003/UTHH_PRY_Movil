@@ -98,7 +98,7 @@ jobs:
               # Obtén la información de la última build para el proyecto
               RESPONSE=$(curl -s \
                 -H "Authorization: Bearer $EAS_ACCESS_TOKEN" \
-                "https://api.expo.dev/v2/projects/{your-project-id}/builds?limit=1")
+                "https://api.expo.dev/v2/projects/af99ed99-2801-4bb8-a41a-2298ada9015f/builds?limit=1")
 
               # Extrae el enlace de descarga del JSON devuelto
               DOWNLOAD_URL=$(echo "$RESPONSE" | jq -r '.data[0].artifacts.buildUrl')
