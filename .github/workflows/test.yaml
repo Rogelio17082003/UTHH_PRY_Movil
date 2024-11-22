@@ -99,7 +99,7 @@ jobs:
       # Construcción para Android
       - name: Build APK for Android
         run:  |
-          eas build:list --limit=1 --status=finished --json
+          eas build:list --limit=1 --status=finished --json --non-interactive
         env:
          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
 
