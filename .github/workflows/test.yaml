@@ -99,7 +99,27 @@ jobs:
       # Construcción para Android
       - name: Build APK for Android
         run:  |
-          eas build:list --limit=1 --status=finished --json --non-interactive
+          RESPONSE=$(eas build:list --limit=1 --status=finished --json --non-interactive)
+
+          # Extraer la URL del artefacto
+          DOWNLOAD_URL=$(echo "$RESPONSE" | jq -r '.[0].artifacts.buildUrl')
+          # Validar si la URL fue obtenida correctamente
+          
+          if [ -z "$DOWNLOAD_URL" ]; then
+            echo "No se pudo obtener el enlace de descarga."
+            exit 1
+          fi
+          
+          # URL de tu Web Service en Hostinger
+          WEB_SERVICE_URL="https://tu-dominio.com/mi-webservice.php"
+          
+          # Enviar la URL al Web Service usando curl
+          curl -X POST -d "buildUrl=$DOWNLOAD_URL" "$WEB_SERVICE_URL"
+          
+          echo "URL enviada correctamente al Web Service: $WEB_SERVICE_URL"
+
+
+
         env:
          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
 
