@@ -109,11 +109,12 @@ jobs:
               echo "No se pudo obtener el enlace de descarga."
               exit 1
             fi
-
+              echo "La URL del artefacto obtenida es: $DOWNLOAD_URL"
 
 
                 env:
-                EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
+                EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets}
+                
 
 
   ### notificaciones Slack
