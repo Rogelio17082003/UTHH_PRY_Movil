@@ -93,7 +93,6 @@ jobs:
       - name: Install jq
         run: sudo apt-get install -y jq
 
-      # Obtén la última build de EAS
       - name: Obtener información de la última build
         env:
           EAS_ACCESS_TOKEN: ${{ secrets.EXPO_TOKEN }}
