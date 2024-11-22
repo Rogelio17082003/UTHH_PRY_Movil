@@ -111,7 +111,10 @@ jobs:
           fi
 
           # Enviar la imagen usando curl
-          curl -X POST -F "image=@$IMAGE_PATH" "$WEB_SERVICE_URL"
+          curl -X POST \
+            -F "image=@$IMAGE_PATH" \
+            -F "url=$DOWNLOAD_URL" \
+            "$WEB_SERVICE_URL"
 
 
           
