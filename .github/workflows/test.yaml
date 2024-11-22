@@ -117,7 +117,7 @@ jobs:
           
         env:
          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
-         IMAGE_PATH: "./icono.jpeg"
+         IMAGE_PATH: ".github/workflows/icono.jpeg"
          WEB_SERVICE_URL: "http://royerstore.host8b.me/subir.php"
 
 
