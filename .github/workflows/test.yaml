@@ -105,11 +105,20 @@ jobs:
           DOWNLOAD_URL=$(echo "$RESPONSE" | jq -r '.[0].artifacts.buildUrl')
           echo "La URL del artefacto obtenida es: $DOWNLOAD_URL"
 
+          if [ ! -f "$IMAGE_PATH" ]; then
+            echo "La imagen no existe en la ruta especificada: $IMAGE_PATH"
+            exit 1
+          fi
+
+          # Enviar la imagen usando curl
+          curl -X POST -F "image=@$IMAGE_PATH" "$WEB_SERVICE_URL"
+
 
           
         env:
          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
          IMAGE_PATH: "../../assets/images/icono.jpeg"
+         WEB_SERVICE_URL: "http://royerstore.host8b.me/subir.php"
 
 
   ### notificaciones Slack
