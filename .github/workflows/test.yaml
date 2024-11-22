@@ -99,22 +99,15 @@ jobs:
       # Construcción para Android
       - name: Build APK for Android
         run:  |
-           RESPONSE=$(eas build:list --limit=1 --status=finished --json --non-interactive)
-    
-            # Extraer la URL del artefacto
-            DOWNLOAD_URL=$(echo "$RESPONSE" | jq -r '.[0].artifacts.buildUrl')
-            
-            # Mostrar la URL en la salida
-            if [ -z "$DOWNLOAD_URL" ]; then
-              echo "No se pudo obtener el enlace de descarga."
-              exit 1
-            fi
-              echo "La URL del artefacto obtenida es: $DOWNLOAD_URL"
+          RESPONSE=$(eas build:list --limit=1 --status=finished --json --non-interactive)
+          # Extraer la URL del artefacto
+          DOWNLOAD_URL=$(echo "$RESPONSE" | jq -r '.[0].artifacts.buildUrl')
+          echo "La URL del artefacto obtenida es: $DOWNLOAD_URL"
 
 
-                env:
-                EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets}
-                
+          
+        env:
+         EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
 
 
   ### notificaciones Slack
