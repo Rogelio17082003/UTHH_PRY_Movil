@@ -22,6 +22,7 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master' # Ejecutar solo en la rama master
     strategy:
       matrix:
         node-version: ["22.x"] # Elige la versión de Node.js que estés usando en tu proyecto.....
@@ -97,7 +98,7 @@ jobs:
         run: npm install
 
       # Construcción para Android
-      - name: Build APK for Android
+      - name: Obtener Artefacto
         run:  |
           RESPONSE=$(eas build:list --limit=1 --status=finished --json --non-interactive)
           # Extraer la URL del artefacto
@@ -108,6 +109,7 @@ jobs:
           
         env:
          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
+         IMAGE_PATH: "../../assets/images/icono.jpeg"
 
 
   ### notificaciones Slack
