@@ -115,9 +115,6 @@ jobs:
 
           echo "El enlace de descarga es: $DOWNLOAD_URL"
 
-          # Exporta el enlace para usarlo en otros pasos
-          echo "DOWNLOAD_URL=$DOWNLOAD_URL" >> $GITHUB_ENV
-
   ### notificaciones Slack
 
   #NOTIFICACIONES
