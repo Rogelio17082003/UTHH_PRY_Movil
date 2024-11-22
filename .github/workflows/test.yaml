@@ -97,23 +97,21 @@ jobs:
         env:
           EAS_ACCESS_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
-          # Obtén la información de la última build para el proyecto
-          RESPONSE=$(curl -s \
-            -H "Authorization: Bearer $EAS_ACCESS_TOKEN" \
-            "https://api.expo.dev/v2/projects/af99ed99-2801-4bb8-a41a-2298ada9015f/builds?limit=1")
-
-          # Imprime el JSON completo para depurar
-          echo "Respuesta de la API: $RESPONSE"
-
-          # Extrae el enlace de descarga del JSON devuelto
-          DOWNLOAD_URL=$(echo "$RESPONSE" | jq -r '.data[0].artifacts.buildUrl')
-
-          if [ "$DOWNLOAD_URL" == "null" ]; then
-            echo "No se encontró un enlace de descarga en la respuesta."
+          # Obtener la información de la última build
+          RESPONSE=$(curl -s -H "Authorization: Bearer $EAS_ACCESS_TOKEN" "https://api.expo.dev/v2/projects/af99ed99-2801-4bb8-a41a-2298ada9015f/builds?limit=1")
+          
+          # Extraer la URL de descarga usando jq
+          DOWNLOAD_URL=$(echo "$RESPONSE" | jq -r '.[0].artifacts.buildUrl')
+          
+          # Validar si la URL fue obtenida correctamente
+          if [ -z "$DOWNLOAD_URL" ]; then
+            echo "No se pudo obtener el enlace de descarga."
             exit 1
+          else
+            echo "El enlace de descarga es: $DOWNLOAD_URL"
+            echo "DOWNLOAD_URL=$DOWNLOAD_URL" >> $GITHUB_ENV
           fi
 
-          echo "El enlace de descarga es: $DOWNLOAD_URL"
 
   ### notificaciones Slack
 
