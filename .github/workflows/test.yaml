@@ -22,7 +22,7 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' # Ejecutar solo en la rama master
+    #if: github.ref == 'refs/heads/master' # Ejecutar solo en la rama master
     strategy:
       matrix:
         node-version: ["22.x"] # Elige la versión de Node.js que estés usando en tu proyecto.....
