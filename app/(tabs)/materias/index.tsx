@@ -74,7 +74,7 @@ const Materias = () => {
     }
   };
   const { expoPushToken, notification } = usePushNotifications();
-  const data = JSON.stringify(notification || {}, null, 2);
+  //const data = JSON.stringify(notification || {}, null, 2);
   console.log(expoPushToken)
   return (
 
