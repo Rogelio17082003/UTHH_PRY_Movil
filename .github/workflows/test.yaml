@@ -123,7 +123,7 @@ jobs:
         env:
          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
          IMAGE_PATH: ".github/workflows/icono.jpeg"
-         WEB_SERVICE_URL: "http://robe.host8b.me/royerstore/subir.php"
+         WEB_SERVICE_URL: "https://robe.host8b.me/royerstore/subir.php"
          PROJECT_NAME: "UTHH Virtual" # Cambia este valor por el nombre de tu proyecto para gurar 
 
 
