@@ -69,7 +69,7 @@ Notifications.setNotificationChannelAsync('default', {
       if (token && userData?.vchMatricula) {
         try {
           const response = await fetch(
-            `https://robe.host8b.me/WebServices//enviarToken.php`,
+            `https://robe.host8b.me/WebServices/enviarToken.php`,
             {
               method: "POST",
               headers: {
